@@ -9,8 +9,8 @@ const adminRoutes = require('./routes/adminRoutes');
 const app = express();
 
 // Middleware
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
 // Database connection
 require('./config/db');
