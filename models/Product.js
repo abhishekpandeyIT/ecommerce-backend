@@ -24,8 +24,8 @@ const reviewSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const productSchema = new mongoose.Schema({
-  name: {
-    type: String,
+  name: { 
+    type: String, 
     required: true,
     trim: true
   },
@@ -39,26 +39,16 @@ const productSchema = new mongoose.Schema({
     min: 0
   },
   category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+    required: true
+  },
+  images: [{
     type: String,
-    required: true,
-    enum: ['Men', 'Women', 'Electronics', 'Home', 'Sports']
-  },
-  subCategory: {
-    type: String
-  },
+    required: true
+  }],
   brand: {
-    type: String
-  },
-  colors: {
-    type: [String],
-    default: []
-  },
-  sizes: {
-    type: [String],
-    default: []
-  },
-  images: {
-    type: [String],
+    type: String,
     required: true
   },
   stock: {
@@ -67,26 +57,21 @@ const productSchema = new mongoose.Schema({
     default: 0,
     min: 0
   },
-  rating: {
-    type: Number,
-    default: 0,
-    min: 0,
-    max: 5
-  },
-  reviews: [reviewSchema],
-  discount: {
-    type: Number,
-    default: 0,
-    min: 0,
-    max: 100
-  },
+  ratings: [{
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    rating: { type: Number, min: 1, max: 5 },
+    comment: String
+  }],
+  colors: [String],
+  sizes: [String],
   featured: {
     type: Boolean,
     default: false
   },
-  salesCount: {
-    type: Number,
-    default: 0
+  slug: {
+    type: String,
+    unique: true,
+    lowercase: true
   }
 }, { timestamps: true });
 
